@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="lib/es/elasticsearch-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/gson/gson-2.2.3.jar"/>
+	<classpathentry kind="lib" path="lib/es/jna-3.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/es/jts-1.13.jar"/>
+	<classpathentry kind="lib" path="lib/es/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-analyzers-common-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-codecs-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-core-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-grouping-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-highlighter-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-join-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-memory-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-misc-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-queries-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-queryparser-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-sandbox-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-spatial-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/lucene-suggest-4.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/es/spatial4j-0.4.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
