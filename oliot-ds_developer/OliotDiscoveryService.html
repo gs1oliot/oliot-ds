@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="OliotDiscoveryService.css">
+
+<!--                                           -->
+<!-- Any title is fine                         -->
+<!--                                           -->
+<title>Oliot Discovery Service</title>
+
+<!--                                           -->
+<!-- This script loads your compiled module.   -->
+<!-- If you add any GWT meta tags, they must   -->
+<!-- be added before this line.                -->
+<!--                                           -->
+<script type="text/javascript" language="javascript"
+	src="oliotdiscoveryservice/oliotdiscoveryservice.nocache.js"></script>
+	
+
+<!-- newly defined script -->	
+
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="js/elasticsearch.jquery.min.js"></script>
+<script type="text/javascript" src="config.js"></script>
+
+<!-- newly implemented script -->
+
+<script type="text/javascript">
+
+	<!-- Global variables -->
+	var locations = new Array();
+	var check;
+	
+	<!-- Functions -->
+	
+	//Search physical locations of things from elasticsearch
+	function search_GeoLocation(epc, starttime, endtime, lat, lon, distance) {
+		
+		//Establish the client connection with elasticsearch
+		var client = new $.es.Client({
+			  hosts: address
+			});
+		
+		distance = distance + 'km';
+		
+		//check asynchronous callback function is running
+		check = "run";
+		console.log(check);
+		
+		//Query for geo distance filter
+		client.search({
+			  index: 'discoveryservice',
+			  type: 'geo',
+			  body: {
+				query: {
+					match: {
+					EPC: epc
+					}
+				},
+				filter: {
+					and: [
+						{
+							range: {
+						    	timestamp: {
+						    		gte: starttime,
+						    		lte: endtime
+						    	}
+						    } 	
+						},
+						{
+							geo_distance: {
+								distance: distance,
+								location: {
+									lat: lat,
+									lon: lon
+								}
+							}
+						}
+					]
+				}
+			}
+		}).then(function (resp) {
+		    var hits = resp.hits.hits;
+		    var i;
+			locations.length = new Array();
+			
+			//add latitude and longitude in location array
+			for (i = 0; i < hits.length; i++) 
+			{
+				console.log(hits[i]._source.location.lat);
+				console.log(hits[i]._source.location.lon);
+				var location = new Array();
+				location.push(hits[i]._source.location.lat);
+				location.push(hits[i]._source.location.lon);
+				locations.push(location);
+			}
+			
+			//check asynchronous callback function is finished
+			check = "finish";
+			console.log(check);
+		}, function (err) {
+		    console.trace(err.message);
+		});
+	}
+	
+	//get latitude and longitude in location array
+	function getPointFromArray(index, value) {
+		if(value == "lat")
+		{
+			return locations[index][0]
+		}
+		else if (value == "lon")
+		{
+			return locations[index][1]
+		}
+	}
+</script>
+
+</head>
+
+<!--                                           -->
+<!-- The body can have arbitrary html, or      -->
+<!-- you can leave the body empty if you want  -->
+<!-- to create a completely dynamic UI.        -->
+<!--                                           -->
+<body>
+</body>
+</html>
